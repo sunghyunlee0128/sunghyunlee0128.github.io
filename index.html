@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Sung Hyun Lee Collection</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..800;1,6..96,400..700&family=Hanken+Grotesk:wght@400;500;600&family=Spline+Sans+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Layout idea: a museum visit. Lobby doors open, a corridor of gilt-framed works with ivory wall labels, an auction floor you can play, then the archive. One committed world: salon-red walls under gallery lights. */
+  --wall:#3b1519;
+  --wall-deep:#220b0e;
+  --gilt:#c9a44c;
+  --ivory:#f4ede1;
+  --ink:#1e1a16;
+  --ink-soft:#5d544a;
+  --up:#93d6a3;
+  --down:#ff8f78;
+  --display:"Bodoni Moda","Didot","Bodoni 72",Georgia,serif;
+  --body:"Hanken Grotesk","Helvetica Neue",Arial,sans-serif;
+  --mono:"Spline Sans Mono",ui-monospace,Menlo,monospace;
+  --text:rgba(244,237,225,.92);
+  --text-dim:rgba(244,237,225,.66);
+  --line:rgba(201,164,76,.32);
+  --mx:50%; --my:30%;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:84px}
+body{
+  margin:0;background:var(--wall);color:var(--text);
+  font:400 17px/1.6 var(--body);
+  background-image:
+    radial-gradient(ellipse 120% 60% at 50% 0%, rgba(255,214,160,.07), transparent 60%),
+    repeating-linear-gradient(90deg, rgba(0,0,0,.05) 0 2px, transparent 2px 120px);
+  -webkit-font-smoothing:antialiased;
+}
+body::after{ /* visitor's lantern: soft light that follows the pointer */
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:1;
+  background:radial-gradient(520px circle at var(--mx) var(--my), rgba(255,226,170,.075), transparent 65%);
+}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--gilt);outline-offset:3px}
+h1,h2,h3{font-family:var(--display);font-weight:500;text-wrap:balance;margin:0;letter-spacing:-.01em}
+p{margin:0}
+.mono{font-family:var(--mono)}
+.skip{position:absolute;left:-9999px}
+.skip:focus{left:16px;top:16px;z-index:100;background:var(--ivory);color:var(--ink);padding:8px 12px}
+
+/* ---------- Ticker + nav ---------- */
+.topbar{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(26,8,10,.86);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.ticker{overflow:hidden;border-bottom:1px solid rgba(201,164,76,.18);height:26px;display:flex;align-items:center}
+.ticker-track{display:flex;gap:40px;white-space:nowrap;font:500 11.5px/1 var(--mono);letter-spacing:.06em;color:var(--text-dim);animation:tick 48s linear infinite;padding-left:20px}
+.ticker-track span b{color:var(--ivory);font-weight:500}
+.ticker-track .u{color:var(--up)} .ticker-track .d{color:var(--down)}
+@keyframes tick{to{transform:translateX(-50%)}}
+nav.rooms{display:flex;align-items:center;gap:24px;padding:10px clamp(16px,4vw,48px);height:52px}
+.mark{font:italic 600 22px/1 var(--display);color:var(--gilt);text-decoration:none;letter-spacing:.02em}
+.rooms ol{display:flex;gap:4px;list-style:none;margin:0 auto;padding:0;overflow-x:auto;scrollbar-width:none}
+.rooms ol::-webkit-scrollbar{display:none}
+.rooms ol a{display:flex;gap:7px;align-items:baseline;text-decoration:none;padding:6px 10px;border-radius:2px;font-size:14px;color:var(--text-dim);white-space:nowrap;transition:color .2s,background .2s}
+.rooms ol a i{font:italic 500 13px var(--display);color:var(--gilt)}
+.rooms ol a:hover,.rooms ol a.on{color:var(--ivory);background:rgba(201,164,76,.12)}
+.admit{font:500 11px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;border:1px dashed var(--gilt);color:var(--gilt);padding:7px 10px;white-space:nowrap}
+@media (max-width:760px){.admit{display:none}.rooms ol a span{display:none}.rooms ol a i{font-size:16px}}
+
+/* ---------- Lobby ---------- */
+.lobby{position:relative;z-index:2;padding:150px clamp(16px,5vw,72px) 96px;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:clamp(32px,6vw,88px);align-items:center;max-width:1320px;margin:0 auto;overflow:hidden}
+.eyebrow{font:500 12px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--gilt);display:flex;gap:14px;align-items:center}
+.eyebrow::before{content:"";width:36px;height:1px;background:var(--gilt)}
+.lobby h1{font-size:clamp(56px,9.5vw,138px);line-height:.88;margin:26px 0 30px;font-weight:500;color:var(--ivory)}
+.lobby h1 em{display:block;font-style:italic;font-weight:400;color:var(--gilt);padding-left:.6em}
+.lobby h1 .ln{display:block;overflow:hidden}
+.lobby h1 .ln>span{display:inline-block;animation:rise 1.1s cubic-bezier(.2,.7,.1,1) both}
+.lobby h1 .ln:nth-child(2)>span{animation-delay:.12s}
+@keyframes rise{from{transform:translateY(105%)}}
+.thesis{font-size:clamp(18px,1.6vw,21px);max-width:34ch;color:var(--text);line-height:1.55}
+.thesis strong{font-weight:500;color:var(--ivory)}
+.facts{display:flex;flex-wrap:wrap;gap:10px 28px;margin:30px 0 36px;padding:18px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);font-size:14px;color:var(--text-dim)}
+.facts b{display:block;font:500 22px/1.2 var(--display);color:var(--ivory)}
+.cta{display:flex;flex-wrap:wrap;gap:12px}
+.btn{font:600 14px/1 var(--body);letter-spacing:.04em;text-decoration:none;padding:15px 22px;border:1px solid var(--gilt);border-radius:1px;cursor:pointer;display:inline-flex;gap:10px;align-items:center;transition:background .25s,color .25s,transform .25s}
+.btn.gilt{background:var(--gilt);color:var(--wall-deep)}
+.btn.gilt:hover{background:#e0c06d}
+.btn.ghost{background:transparent;color:var(--gilt)}
+.btn.ghost:hover{background:rgba(201,164,76,.12)}
+.btn:active{transform:translateY(1px)}
+.btn[disabled]{opacity:.4;cursor:not-allowed}
+
+.doors{position:fixed;inset:0;z-index:60;display:flex;pointer-events:none;perspective:1600px}
+.door{flex:1;background:
+  linear-gradient(90deg,rgba(0,0,0,.35),transparent 12%,transparent 88%,rgba(0,0,0,.35)),
+  repeating-linear-gradient(90deg,#2a1610 0 3px,#24130d 3px 9px),#26140e;
+  position:relative;border:1px solid #120806}
+.door::before{content:"";position:absolute;inset:8% 12%;border:2px solid rgba(201,164,76,.45);box-shadow:inset 0 0 0 10px rgba(0,0,0,.15),inset 0 0 0 12px rgba(201,164,76,.25)}
+.door.l{transform-origin:left center;animation:openL 1.7s cubic-bezier(.6,.05,.25,1) .5s forwards}
+.door.r{transform-origin:right center;animation:openR 1.7s cubic-bezier(.6,.05,.25,1) .5s forwards}
+.door .handle{position:absolute;top:50%;width:10px;height:90px;margin-top:-45px;background:linear-gradient(#f0d996,#8a6a2a);border-radius:5px}
+.door.l .handle{right:22px}.door.r .handle{left:22px}
+.doors .sign{position:absolute;left:50%;top:22%;transform:translateX(-50%);font:italic 500 clamp(16px,2vw,22px)/1.3 var(--display);color:var(--gilt);text-align:center;z-index:2;animation:fade .5s ease .45s forwards;letter-spacing:.04em}
+.doors .sign small{display:block;font:500 11px var(--mono);letter-spacing:.24em;text-transform:uppercase;margin-top:8px}
+@keyframes openL{to{transform:rotateY(-82deg);opacity:0;visibility:hidden}}
+@keyframes openR{to{transform:rotateY(82deg);opacity:0;visibility:hidden}}
+@keyframes fade{to{opacity:0}}
+.doors.gone{display:none}
+
+/* ---------- Frames + labels ---------- */
+.work{position:relative;display:flex;flex-direction:column;gap:22px}
+.work::before{content:"";position:absolute;top:-110px;left:6%;right:6%;height:260px;pointer-events:none;background:radial-gradient(ellipse 50% 100% at 50% 0%,rgba(255,228,176,.20),transparent 70%);z-index:-1}
+.frame{
+  position:relative;padding:clamp(10px,1.4vw,18px);
+  background:linear-gradient(135deg,#7d5f24,#e9cf88 22%,#a07f37 46%,#f2db98 70%,#7a5c22);
+  box-shadow:0 34px 60px -18px rgba(0,0,0,.65),0 0 0 1px rgba(0,0,0,.4);
+  transform-style:preserve-3d;transition:transform .5s cubic-bezier(.2,.7,.2,1),box-shadow .5s;
+  will-change:transform
+}
+.frame::after{content:"";position:absolute;inset:clamp(10px,1.4vw,18px);box-shadow:inset 0 0 0 1px rgba(0,0,0,.45),inset 0 6px 18px rgba(0,0,0,.45);pointer-events:none}
+.frame .mat{background:#ece4d3;padding:clamp(10px,2.2vw,26px)}
+.frame canvas{display:block;width:100%;aspect-ratio:4/3;background:#222}
+.frame.tall canvas{aspect-ratio:4/5}
+.work>.label{align-self:center;width:100%}
+.label{background:var(--ivory);color:var(--ink);padding:18px 20px 16px;max-width:380px;font-size:14px;line-height:1.5;box-shadow:0 3px 10px rgba(0,0,0,.35)}
+.label .who{font:600 11px/1.2 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft)}
+.label h3{font-size:22px;line-height:1.15;font-style:italic;margin:6px 0 2px;color:var(--ink)}
+.label .date{font-family:var(--display);font-size:16px;color:var(--ink)}
+.label .medium{margin:10px 0 8px;color:var(--ink-soft);font-size:13px}
+.label ul{margin:8px 0 10px;padding-left:16px}
+.label li{margin:3px 0}
+.label .acc{display:flex;justify-content:space-between;gap:12px;border-top:1px solid rgba(30,26,22,.18);padding-top:8px;margin-top:6px;font:500 11px/1.2 var(--mono);letter-spacing:.06em;color:var(--ink-soft)}
+.label a{color:#7a2a20;font-weight:600}
+
+/* ---------- Rooms ---------- */
+.room{position:relative;z-index:2;padding:110px clamp(16px,5vw,72px);max-width:1320px;margin:0 auto}
+.room-head{display:grid;grid-template-columns:auto 1fr;gap:6px 28px;align-items:end;margin-bottom:64px;max-width:900px}
+.room-no{grid-row:span 2;font:italic 400 clamp(64px,9vw,120px)/.8 var(--display);color:var(--gilt)}
+.room-head h2{font-size:clamp(34px,4.6vw,58px);line-height:1;color:var(--ivory)}
+.room-head p{color:var(--text-dim);max-width:60ch}
+.dim{filter:brightness(.42) saturate(.7);transform:translateY(26px);transition:filter 1.2s ease,transform 1.2s cubic-bezier(.2,.7,.2,1)}
+.dim.lit{filter:none;transform:none}
+
+.pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(40px,7vw,110px);align-items:start}
+.trio{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(28px,4vw,56px);align-items:start}
+.trio .label h3{font-size:19px}
+@media (max-width:900px){.lobby{grid-template-columns:1fr;padding-top:130px}.pair,.trio{grid-template-columns:1fr}.trio .work{max-width:520px}}
+
+/* corridor (horizontal walk on wide screens) */
+.corridor{position:relative;z-index:2}
+.corridor .room-head{padding:110px clamp(16px,5vw,72px) 0;max-width:1320px;margin:0 auto 40px}
+.track{display:grid;gap:96px;padding:40px clamp(16px,5vw,72px) 110px;max-width:1320px;margin:0 auto}
+.track .work{display:flex;flex-direction:column;align-items:center;gap:22px;max-width:760px;margin:0 auto;width:100%}
+.track .frame{width:100%}
+.track .label{max-width:440px;width:100%}
+.corridor.h .sticky{position:sticky;top:0;height:100vh;overflow:hidden;display:flex;flex-direction:column;justify-content:center;padding-top:78px}
+.corridor.h .room-head{padding-top:0;margin-bottom:28px}
+.corridor.h .track{display:flex;gap:120px;max-width:none;margin:0;padding:30px 12vw 30px clamp(16px,5vw,72px);width:max-content;will-change:transform}
+.corridor.h{--ph:clamp(180px,calc(100vh - 665px),400px)}
+.corridor.h .track{align-items:flex-start}
+.corridor.h .track .work{width:calc(var(--ph) * 1.45 + 56px);max-width:none;margin:0;flex:none}
+.corridor.h .track .frame canvas{aspect-ratio:auto;height:var(--ph)}
+.corridor.h .track .label{padding:14px 18px 12px}
+.corridor.h .track .label ul{margin:6px 0 8px}
+.walk{display:none}
+.corridor.h .walk{display:flex;align-items:center;gap:16px;padding:0 clamp(16px,5vw,72px);font:500 11px var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--text-dim)}
+.walk .bar{flex:0 0 240px;height:1px;background:var(--line);position:relative}
+.walk .bar i{position:absolute;left:0;top:-1px;height:3px;width:0;background:var(--gilt)}
+
+/* ---------- Auction floor ---------- */
+.auction{max-width:1320px}
+.game{position:relative;background:linear-gradient(180deg,#1c0a0c,#160809);border:1px solid var(--line);padding:clamp(16px,2.6vw,32px);box-shadow:0 40px 80px -30px rgba(0,0,0,.8)}
+.g-hud{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);margin-bottom:18px}
+.stat{background:#1a090b;padding:12px 14px;display:flex;flex-direction:column;gap:4px;min-width:0}
+.stat .k{font:500 10.5px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--text-dim)}
+.stat .v{font:500 19px/1.2 var(--mono);color:var(--ivory);font-variant-numeric:tabular-nums;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.stat.timer{flex-direction:row;align-items:center;gap:12px}
+.stat.timer svg{width:40px;height:40px;transform:rotate(-90deg);flex:none}
+.stat.timer circle{fill:none;stroke-width:3}
+.stat.timer .bg{stroke:rgba(201,164,76,.2)}
+.stat.timer .fg{stroke:var(--gilt);stroke-linecap:round;transition:stroke-dashoffset .25s linear}
+.up{color:var(--up)!important}.down{color:var(--down)!important}
+@media (max-width:900px){.g-hud{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:480px){.g-hud{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+.g-news{display:grid;grid-template-columns:auto 1fr;gap:6px 18px;align-items:center;background:var(--ivory);color:var(--ink);padding:16px 20px;margin-bottom:18px;position:relative;overflow:hidden}
+.g-news .tags{display:flex;flex-direction:column;gap:6px;align-items:flex-start}
+.chip{font:600 10.5px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;padding:6px 8px;background:var(--wall);color:var(--ivory)}
+.truth{font:600 10.5px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;padding:5px 7px;border:1px solid currentColor}
+.truth.rumor{color:#9a5a12}.truth.conf{color:#2b6a3d}
+.g-news p.head{font:italic 500 clamp(18px,2vw,24px)/1.25 var(--display)}
+.g-news .fine{grid-column:2;font-size:12.5px;color:var(--ink-soft)}
+.g-news.flash{animation:flash .7s ease}
+@keyframes flash{from{box-shadow:inset 0 0 0 999px rgba(201,164,76,.45)}}
+
+.g-lots{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+@media (max-width:1000px){.g-lots{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:560px){.g-lots{grid-template-columns:1fr}}
+.lot{background:#21100f;border:1px solid rgba(201,164,76,.2);padding:12px;display:grid;grid-template-columns:96px 1fr;gap:12px 14px;align-items:start;transition:border-color .3s,transform .3s}
+.lot.hit{border-color:var(--gilt)}
+.lot .thumb{padding:5px;background:linear-gradient(135deg,#7d5f24,#e9cf88 30%,#9c7a33 60%,#f2db98)}
+.lot .thumb canvas{display:block;width:100%;aspect-ratio:1/1}
+.lot .lno{font:500 10.5px/1 var(--mono);letter-spacing:.14em;color:var(--gilt)}
+.lot h4{font:italic 500 18px/1.15 var(--display);margin:4px 0 2px;color:var(--ivory)}
+.lot .art{font-size:12.5px;color:var(--text-dim)}
+.lot .px{grid-column:1 / -1;display:flex;align-items:center;justify-content:space-between;gap:10px;border-top:1px solid rgba(201,164,76,.16);padding-top:10px}
+.lot .px b{font:500 20px/1 var(--mono);color:var(--ivory);font-variant-numeric:tabular-nums}
+.lot .px b small{font-size:11px;color:var(--text-dim);margin-left:3px}
+.pill{font:500 12px/1 var(--mono);padding:4px 7px;border-radius:2px;background:rgba(255,255,255,.06);font-variant-numeric:tabular-nums}
+.pill.up{background:rgba(147,214,163,.12)}.pill.down{background:rgba(255,143,120,.12)}
+.spark{width:90px;height:28px;flex:none}
+.spark polyline{fill:none;stroke:var(--gilt);stroke-width:1.5;stroke-linejoin:round}
+.spark path{fill:rgba(201,164,76,.12)}
+.spark circle{fill:var(--ivory)}
+.lot .own{grid-column:1 / -1;display:flex;align-items:center;justify-content:space-between;gap:8px;font:500 12px/1.2 var(--mono);color:var(--text-dim)}
+.lot .own b{color:var(--ivory);font-weight:500}
+.lot .acts{display:flex;gap:6px}
+.lot .acts button{font:600 12px/1 var(--mono);padding:8px 10px;background:transparent;border:1px solid rgba(201,164,76,.5);color:var(--ivory);cursor:pointer;border-radius:1px;transition:background .2s}
+.lot .acts button:hover:not([disabled]){background:rgba(201,164,76,.18)}
+.lot .acts button.buy{background:rgba(201,164,76,.2)}
+.lot .acts button[disabled]{opacity:.32;cursor:not-allowed}
+.g-bar{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-top:18px}
+.g-bar .fine{margin-left:auto;font:500 11.5px/1.4 var(--mono);color:var(--text-dim)}
+.g-log{list-style:none;margin:18px 0 0;padding:14px 0 0;border-top:1px solid var(--line);display:grid;gap:6px;font:400 13px/1.45 var(--mono);color:var(--text-dim);max-height:150px;overflow:auto}
+.g-log li b{color:var(--ivory);font-weight:500}
+.g-over{position:absolute;inset:0;background:rgba(18,6,8,.72);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);display:flex;align-items:center;justify-content:center;padding:16px;z-index:5}
+.g-over[hidden]{display:none}
+.g-card{background:var(--ivory);color:var(--ink);max-width:620px;width:100%;padding:clamp(22px,3.4vw,40px);box-shadow:0 30px 70px rgba(0,0,0,.6);max-height:100%;overflow:auto;animation:cardIn .45s cubic-bezier(.2,.7,.2,1)}
+@keyframes cardIn{from{transform:translateY(16px) scale(.98)}}
+.g-card .kicker{font:600 11px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:#7a2a20}
+.g-card h3{font-size:clamp(28px,3.4vw,40px);line-height:1.05;margin:10px 0 14px;font-style:italic}
+.g-card p{margin:0 0 12px;color:#3d362f;font-size:15.5px}
+.g-card ol{margin:0 0 18px;padding-left:20px;font-size:15px;color:#3d362f}
+.g-card ol li{margin:4px 0}
+.g-card .opts{display:grid;gap:8px;margin:16px 0 6px}
+.g-card .opts button{text-align:left;font:500 15px/1.35 var(--body);padding:13px 16px;background:#fff;border:1px solid rgba(30,26,22,.25);cursor:pointer;color:var(--ink);border-radius:1px;transition:border-color .2s,background .2s}
+.g-card .opts button:hover:not([disabled]){border-color:var(--wall);background:#fbf7ef}
+.g-card .opts button.right{border-color:#2b6a3d;background:#e6f2e7}
+.g-card .opts button.wrong{border-color:#a3352a;background:#f8e5e1}
+.g-card .verdict{border-left:3px solid var(--gilt);padding:10px 14px;background:#efe6d4;font-size:14.5px;margin:14px 0}
+.g-card .btn.gilt{color:var(--ivory);background:var(--wall);border-color:var(--wall)}
+.g-card .btn.gilt:hover{background:#56202a}
+.g-card .score{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(30,26,22,.2);margin:14px 0 18px}
+.g-card .score div{background:var(--ivory);padding:12px}
+.g-card .score span{display:block;font:600 10.5px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft)}
+.g-card .score b{font:500 22px/1.3 var(--mono);font-variant-numeric:tabular-nums}
+.g-card .case{font:500 12px var(--mono);color:var(--ink-soft);margin-bottom:6px}
+
+/* ---------- Archive ---------- */
+.catalogue{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 64px;border-top:1px solid var(--line)}
+.cat-row{display:grid;grid-template-columns:48px 124px 1fr;gap:14px;padding:20px 0;border-bottom:1px solid var(--line);align-items:baseline}
+.cat-row .n{font:500 12px var(--mono);color:var(--gilt)}
+.cat-row h3{font-size:20px;font-style:italic;color:var(--ivory)}
+.cat-row ul{list-style:none;margin:0;padding:0;display:grid;gap:8px;color:var(--text);font-size:15.5px;line-height:1.4}
+.cat-row li{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.cat-row li::before{content:"";flex:none;width:6px;height:6px;background:var(--gilt);transform:rotate(45deg) translateY(-2px)}
+.cat-row li small{font:500 10.5px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--gilt);border:1px solid var(--line);padding:4px 6px}
+@media (max-width:900px){.catalogue{grid-template-columns:1fr}.cat-row{grid-template-columns:40px 1fr}.cat-row ul{grid-column:2}}
+
+.visitor{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:48px;align-items:end;border:1px solid var(--line);padding:clamp(24px,4vw,56px);background:linear-gradient(120deg,rgba(201,164,76,.08),transparent 60%)}
+.visitor h2{font-size:clamp(36px,5vw,64px);line-height:1;color:var(--ivory)}
+.visitor h2 em{color:var(--gilt)}
+.visitor .lines{display:grid;gap:14px}
+.visitor .lines a,.visitor .lines span{display:flex;justify-content:space-between;gap:16px;padding:14px 0;border-bottom:1px solid var(--line);text-decoration:none;font-size:16px}
+.visitor .lines small{font:500 11px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--text-dim)}
+.visitor .lines a:hover{color:var(--gilt)}
+@media (max-width:800px){.visitor{grid-template-columns:1fr}}
+footer{position:relative;z-index:2;padding:40px clamp(16px,5vw,72px) 56px;max-width:1320px;margin:0 auto;display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;font:500 11.5px var(--mono);letter-spacing:.08em;color:var(--text-dim)}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+  .doors{display:none}
+  .dim{filter:none;transform:none}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#collection">Skip to the galleries</a>
+
+<div class="doors" id="doors" aria-hidden="true">
+  <div class="door l"><span class="handle"></span></div>
+  <div class="door r"><span class="handle"></span></div>
+  <div class="sign">The Sung Hyun Lee Collection<small>Now open</small></div>
+</div>
+
+<div class="topbar">
+  <div class="ticker" aria-label="Auction floor prices"><div class="ticker-track" id="ticker"></div></div>
+  <nav class="rooms" aria-label="Floor plan">
+    <a class="mark" href="#lobby">S.H.L.</a>
+    <ol>
+      <li><a href="#foundations"><i>I</i><span>Foundations</span></a></li>
+      <li><a href="#collection"><i>II</i><span>The Collection</span></a></li>
+      <li><a href="#service"><i>III</i><span>Service</span></a></li>
+      <li><a href="#auction"><i>IV</i><span>Auction Floor</span></a></li>
+      <li><a href="#archive"><i>V</i><span>Archive</span></a></li>
+    </ol>
+    <span class="admit">Admission free</span>
+  </nav>
+</div>
+
+<header class="lobby" id="lobby">
+  <div>
+    <p class="eyebrow">Permanent collection &middot; Philadelphia</p>
+    <h1><span class="ln"><span>Sung Hyun</span></span><span class="ln"><span><em>Lee</em></span></span></h1>
+    <p class="thesis">I study how artworks and entertainment IP become <strong>investable assets</strong>, and I build tools that let people trade, price and protect them.</p>
+    <div class="facts">
+      <div><b>Penn &rsquo;27</b>History &amp; History of Art</div>
+      <div><b>3.96</b>GPA, Dean&rsquo;s List</div>
+      <div><b>Art. Di</b>Founder, on the App Store</div>
+    </div>
+    <div class="cta">
+      <a class="btn gilt" href="#collection">Enter the galleries</a>
+      <a class="btn ghost" href="#auction">Play the Auction Floor &middot; 5 min</a>
+    </div>
+  </div>
+  <figure class="work" style="margin:0">
+    <div class="frame tilt"><div class="mat"><canvas data-style="field" data-seed="27" class="tall" aria-label="Generative color-field painting"></canvas></div></div>
+    <figcaption class="label">
+      <p class="who">Sung Hyun Lee (이성현)</p>
+      <h3>Self-Portrait as an Asset Class</h3>
+      <p class="date">2026</p>
+      <p class="medium">History, art history, finance and intellectual property law on canvas. Korean and English (native), Chinese and Japanese (limited working).</p>
+      <p class="acc"><span>On loan from the artist</span><span>Acc. 2027.0</span></p>
+    </figcaption>
+  </figure>
+</header>
+
+<!-- I. Foundations -->
+<section class="room" id="foundations">
+  <header class="room-head">
+    <span class="room-no">I</span>
+    <h2>Foundations</h2>
+    <p>Two schools of history, one through-line: how culture, commerce and capital shape each other.</p>
+  </header>
+  <div class="pair">
+    <figure class="work reveal" style="margin:0">
+      <div class="frame tilt"><canvas data-style="dutch" data-seed="1740" aria-label="Generative old-master style portrait"></canvas></div>
+      <figcaption class="label">
+        <p class="who">University of Pennsylvania</p>
+        <h3>Bachelor of Arts, History and History of Art</h3>
+        <p class="date">Expected May 2027</p>
+        <p class="medium">School of Arts and Sciences. GPA 3.96 / 4.00, Dean&rsquo;s List every semester.</p>
+        <ul><li>History of American Entertainment Industries</li><li>Commercial Expansion in the Pacific</li></ul>
+        <p class="acc"><span>Philadelphia, PA</span><span>Acc. 2027.1</span></p>
+      </figcaption>
+    </figure>
+    <figure class="work reveal" style="margin:0">
+      <div class="frame tilt"><canvas data-style="field" data-seed="1876" data-pal="field2" aria-label="Generative color-field painting"></canvas></div>
+      <figcaption class="label">
+        <p class="who">Johns Hopkins University</p>
+        <h3>Bachelor of Arts candidate, History</h3>
+        <p class="date">2021 &ndash; 2022</p>
+        <p class="medium">Krieger School of Arts and Sciences. GPA 3.89 / 4.00, Dean&rsquo;s List every semester.</p>
+        <ul><li>NEST Strategies consultant</li><li>The Triple Helix student researcher</li><li>American Marketing Association analyst</li></ul>
+        <p class="acc"><span>Baltimore, MD</span><span>Acc. 2022.1</span></p>
+      </figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- II. The Collection (corridor) -->
+<section class="corridor" id="collection">
+  <div class="sticky">
+    <header class="room-head">
+      <span class="room-no">II</span>
+      <h2>The Collection</h2>
+      <p>Professional work, hung in the order it was acquired, newest first.</p>
+    </header>
+    <div class="track" id="track">
+      <figure class="work" style="margin:0">
+        <div class="frame tilt"><canvas data-style="grid" data-seed="105" aria-label="Generative grid abstraction"></canvas></div>
+        <figcaption class="label">
+          <p class="who">Founder &amp; Product Manager</p>
+          <h3>Art. Di Alternative Investment Simulator</h3>
+          <p class="date">May 2026 &ndash; present</p>
+          <p class="medium">105 artwork cost models, tariffs, insurance, authentication risk. Built with Claude Code and live on the App Store.</p>
+          <ul>
+            <li>Priced every work with its real carrying costs, then turned it into a hypothesis-driven investment simulator</li>
+            <li>Drove price movement from 7 categories of market events</li>
+            <li>Shipped the full app end to end. <a href="#auction">Try a version below.</a></li>
+          </ul>
+          <p class="acc"><span>Philadelphia, PA</span><span>Acc. 2026.3</span></p>
+        </figcaption>
+      </figure>
+      <figure class="work" style="margin:0">
+        <div class="frame tilt"><div class="mat"><canvas data-style="ink" data-seed="150" aria-label="Generative ink-stroke painting"></canvas></div></div>
+        <figcaption class="label">
+          <p class="who">Published Author</p>
+          <h3>The Bookk Publishing Platform</h3>
+          <p class="date">Apr 2025 &ndash; present</p>
+          <p class="medium">Original IP, 150 primary and secondary sources, 6 bookstore contracts.</p>
+          <ul>
+            <li>Ran the IP publication project from originality checks to signing with 6 Korean bookstores</li>
+            <li>Led 5 publisher meetings on pricing and AI-driven marketing</li>
+            <li>Checked the storyline against 150 sources on historical subjects and artworks</li>
+          </ul>
+          <p class="acc"><span>Seoul, KR</span><span>Acc. 2025.2</span></p>
+        </figcaption>
+      </figure>
+      <figure class="work" style="margin:0">
+        <div class="frame tilt"><canvas data-style="tide" data-seed="1980" aria-label="Generative wave painting"></canvas></div>
+        <figcaption class="label">
+          <p class="who">Investment Research Assistant</p>
+          <h3>University of Pennsylvania</h3>
+          <p class="date">May &ndash; Aug 2026</p>
+          <p class="medium">50+ investment and media reports, 5 U.S. entertainment industries, value chains since the 1980s.</p>
+          <ul>
+            <li>Mapped how value moves through 5 entertainment industries</li>
+            <li>Met weekly with Linda Simensky to steer the financial analysis</li>
+            <li>Studied interviews with 37 executive producers and investors</li>
+          </ul>
+          <p class="acc"><span>Philadelphia, PA</span><span>Acc. 2026.2</span></p>
+        </figcaption>
+      </figure>
+      <figure class="work" style="margin:0">
+        <div class="frame tilt"><canvas data-style="dots" data-seed="300" aria-label="Generative dot composition"></canvas></div>
+        <figcaption class="label">
+          <p class="who">Artwork Investment Intern (GIP)</p>
+          <h3>Hanwha Finance Network</h3>
+          <p class="date">Jun &ndash; Aug 2023</p>
+          <p class="medium">300+ modern artwork simulations across Artnet, Artsy and Centre Pompidou data. ₩1 billion model portfolio.</p>
+          <ul>
+            <li>Built a client-driven modern art portfolio and marketing proposal on a ₩1B budget</li>
+            <li>Conceived an alternative investment app with the VC, Entertainment and Art Fair teams</li>
+          </ul>
+          <p class="acc"><span>Seoul, KR</span><span>Acc. 2023.1</span></p>
+        </figcaption>
+      </figure>
+    </div>
+    <div class="walk" aria-hidden="true"><span>Keep scrolling to walk the corridor</span><span class="bar"><i id="walkBar"></i></span></div>
+  </div>
+</section>
+
+<!-- III. Service -->
+<section class="room" id="service">
+  <header class="room-head">
+    <span class="room-no">III</span>
+    <h2>Service &amp; Societies</h2>
+    <p>Leadership under pressure, and research done with a team.</p>
+  </header>
+  <div class="trio">
+    <figure class="work reveal" style="margin:0">
+      <div class="frame tilt"><div class="mat"><canvas data-style="ink" data-seed="38" data-pal="ink2" aria-label="Generative ink-stroke painting"></canvas></div></div>
+      <figcaption class="label">
+        <p class="who">Intelligence Analyst Unit Squad Leader</p>
+        <h3>Republic of Korea Army</h3>
+        <p class="date">Oct 2023 &ndash; Apr 2025</p>
+        <ul><li>Led review of 200 monthly and quarterly financial statements</li><li>Wrote 500+ daily intelligence and resource reports for 15 units near the DMZ</li></ul>
+        <p class="acc"><span>Paju, KR</span><span>Acc. 2025.1</span></p>
+      </figcaption>
+    </figure>
+    <figure class="work reveal" style="margin:0">
+      <div class="frame tilt"><canvas data-style="grid" data-seed="15" data-pal="grid2" aria-label="Generative grid abstraction"></canvas></div>
+      <figcaption class="label">
+        <p class="who">Business Analysis Committee</p>
+        <h3>Wharton Korea Undergraduate Business Society</h3>
+        <p class="date">Sep 2022 &ndash; Apr 2023</p>
+        <ul><li>Analyzed 30+ corporate investment strategies with 15 members</li><li>Authored 8 monthly research reports</li></ul>
+        <p class="acc"><span>Philadelphia, PA</span><span>Acc. 2023.0</span></p>
+      </figcaption>
+    </figure>
+    <figure class="work reveal" style="margin:0">
+      <div class="frame tilt"><canvas data-style="pixel" data-seed="60" data-pal="pixel2" aria-label="Generative pixel composition"></canvas></div>
+      <figcaption class="label">
+        <p class="who">Student Consultant</p>
+        <h3>NEST Strategies, JHU American Marketing Association</h3>
+        <p class="date">Jan &ndash; May 2022</p>
+        <ul><li>Assessed 60 weekly financial and marketing datasets for 5 clients</li><li>Lifted clients&rsquo; teen social reach by 15%</li></ul>
+        <p class="acc"><span>Baltimore, MD</span><span>Acc. 2022.0</span></p>
+      </figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- IV. Auction Floor -->
+<section class="room auction" id="auction">
+  <header class="room-head">
+    <span class="room-no">IV</span>
+    <h2>The Auction Floor</h2>
+    <p>Ten seasons, about five minutes. Trade fractional shares in six fictional artworks, read the market news before it prices in, and rule on three real art-law cases. Your goal is to beat the Lee Art Index.</p>
+  </header>
+
+  <div class="game" id="game">
+    <div class="g-hud">
+      <div class="stat"><span class="k">Season</span><span class="v" id="hSeason">0 / 10</span></div>
+      <div class="stat timer">
+        <svg viewBox="0 0 40 40" aria-hidden="true"><circle class="bg" cx="20" cy="20" r="17"/><circle class="fg" id="ring" cx="20" cy="20" r="17" stroke-dasharray="106.8" stroke-dashoffset="0"/></svg>
+        <span><span class="k" style="display:block">Gavel in</span><span class="v" id="hTime">30s</span></span>
+      </div>
+      <div class="stat"><span class="k">Cash</span><span class="v" id="hCash">$100,000</span></div>
+      <div class="stat"><span class="k">Collection</span><span class="v" id="hHold">$0</span></div>
+      <div class="stat"><span class="k">Net worth</span><span class="v" id="hNet">$100,000</span></div>
+      <div class="stat"><span class="k">You vs index</span><span class="v" id="hVs">+0.0 pts</span></div>
+    </div>
+
+    <div class="g-news" id="gNews" aria-live="polite">
+      <div class="tags"><span class="chip" id="nCat">Preview</span><span class="truth" id="nTruth" hidden></span></div>
+      <p class="head" id="nHead">The saleroom is open for viewing. Six lots, 1,000 shares each.</p>
+      <p class="fine" id="nFine">News is announced at the start of each season and prices in when the gavel falls. Rumors can turn out false.</p>
+    </div>
+
+    <div class="g-lots" id="gLots"></div>
+
+    <div class="g-bar">
+      <button class="btn ghost" id="gPause" type="button" disabled>Pause</button>
+      <button class="btn gilt" id="gSettle" type="button" disabled>Drop the gavel now</button>
+      <p class="fine">Trading fee 1.5% each way &middot; insurance 0.5% of your collection per season</p>
+    </div>
+    <ol class="g-log" id="gLog"><li>Season results will be recorded here.</li></ol>
+
+    <div class="g-over" id="gOver"><div class="g-card" id="gCard" role="dialog" aria-modal="true" aria-labelledby="gTitle"></div></div>
+  </div>
+</section>
+
+<!-- V. Archive -->
+<section class="room" id="archive">
+  <header class="room-head">
+    <span class="room-no">V</span>
+    <h2>The Archive</h2>
+    <p>Catalogue of tools, languages and credentials held in the collection.</p>
+  </header>
+  <div class="catalogue">
+    <div class="cat-row"><span class="n">V.01</span><h3>Skills</h3><ul>
+      <li>Investment research <small>IBISWorld</small></li>
+      <li>Data visualization</li>
+      <li>AI-driven product development <small>Claude Code</small></li>
+      <li>MS Office</li></ul></div>
+    <div class="cat-row"><span class="n">V.02</span><h3>Languages</h3><ul>
+      <li>English <small>Native</small></li>
+      <li>Korean <small>Native</small></li>
+      <li>Chinese <small>Limited working</small></li>
+      <li>Japanese <small>Limited working</small></li></ul></div>
+    <div class="cat-row"><span class="n">V.03</span><h3>Certificates</h3><ul>
+      <li>Introduction to Corporate Finance</li>
+      <li>Introduction to Financial Accounting</li>
+      <li>Fundamentals of Finance</li></ul></div>
+    <div class="cat-row"><span class="n">V.04</span><h3>Interests</h3><ul>
+      <li>Artwork investment</li>
+      <li>Visual entertainment market analysis</li>
+      <li>Creative writing &amp; novel translation</li>
+      <li>Fencing &amp; bowling</li></ul></div>
+  </div>
+
+  <div class="visitor" style="margin-top:96px">
+    <h2>Sign the <em>visitor book.</em></h2>
+    <div class="lines">
+      <a href="mailto:leesungh@sas.upenn.edu"><small>Email</small>leesungh@sas.upenn.edu</a>
+      <a href="https://www.linkedin.com/in/sung-hyun-lee"><small>LinkedIn</small>linkedin.com/in/sung-hyun-lee</a>
+      <span><small>Based in</small>Philadelphia, PA &middot; Seoul, KR</span>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>The Sung Hyun Lee Collection &middot; All works generated in your browser</span>
+  <span>Artists and lots on the Auction Floor are fictional</span>
+</footer>
+
+<script>
+(function(){
+"use strict";
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ======================= Generative art ======================= */
+function rng(seed){let a=seed>>>0;return function(){a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+const PALS={
+  field:['#2b2a4c','#c4553b','#e0a43a','#7c2f3b'],
+  field2:['#16353a','#d9c08a','#a2402f','#e9e1cf'],
+  grid:['#efe8da','#1d1a17','#2f5d9e','#c9a44c','#b9412f'],
+  grid2:['#e9e2d2','#1d1a17','#3b1519','#c9a44c','#6f8f86'],
+  ink:['#ebe4d4','#26303d','#c4553b'],
+  ink2:['#dfe0d0','#2f3a2b','#8a6d3b'],
+  spray:['#1b1d24','#ff4fa3','#f6e04b','#55e0d6'],
+  dutch:['#120d0a','#21170f','#d6a679','#efe7d6'],
+  pixel:['#0f1a14','#6be08a','#f2d24b','#e85c8a','#5aa7f2'],
+  pixel2:['#1a1420','#c9a44c','#e9e1cf','#b9412f','#6f8f86'],
+  tide:['#0e2a33','#2f7f86','#d9c08a','#e8e1cf','#14485a'],
+  dots:['#f1ead9','#b9412f','#1d1a17','#c9a44c','#2f5d9e']
+};
+const ART={
+  field(c,w,h,r,P){
+    c.fillStyle=P[0];c.fillRect(0,0,w,h);
+    const n=2+Math.floor(r()*2);let y=h*.07;const gap=h*.05,tot=h*.86-gap*(n-1);
+    for(let i=0;i<n;i++){
+      const rh=tot*(i===0?.5+r()*.2:(1/(n)))*(i===n-1?1:1);
+      const hh=i===n-1?h*.93-y:rh;
+      c.save();c.shadowColor=P[1+i%3];c.shadowBlur=w*.05;c.globalAlpha=.9;c.fillStyle=P[1+i%3];
+      c.fillRect(w*.09,y,w*.82,hh);c.restore();
+      y+=hh+gap;
+    }
+    c.globalAlpha=.07;for(let i=0;i<220;i++){c.fillStyle=r()>.5?'#fff':'#000';c.fillRect(w*.09+r()*w*.82,r()*h,w*.12,1)}c.globalAlpha=1;
+  },
+  grid(c,w,h,r,P){
+    c.fillStyle=P[0];c.fillRect(0,0,w,h);
+    const xs=[0],ys=[0];for(let i=0;i<3;i++){xs.push(w*(.15+r()*.75));ys.push(h*(.12+r()*.78))}
+    xs.push(w);ys.push(h);xs.sort((a,b)=>a-b);ys.sort((a,b)=>a-b);
+    for(let i=0;i<xs.length-1;i++)for(let j=0;j<ys.length-1;j++){
+      if(r()<.28){c.fillStyle=P[2+Math.floor(r()*3)];c.fillRect(xs[i],ys[j],xs[i+1]-xs[i],ys[j+1]-ys[j])}
+    }
+    c.fillStyle=P[1];const lw=Math.max(4,w*.016);
+    xs.slice(1,-1).forEach(x=>c.fillRect(x-lw/2,0,lw,h));ys.slice(1,-1).forEach(y=>c.fillRect(0,y-lw/2,w,lw));
+  },
+  ink(c,w,h,r,P){
+    c.fillStyle=P[0];c.fillRect(0,0,w,h);
+    c.fillStyle=P[2];c.globalAlpha=.85;c.beginPath();c.arc(w*(.62+r()*.2),h*.26,Math.min(w,h)*.07,0,7);c.fill();
+    c.strokeStyle=P[1];c.lineCap='round';
+    for(let row=0;row<13;row++){
+      const y=h*.42+row*h*.042;const alpha=.18+.6*(row/13);
+      for(let s=0;s<3;s++){
+        c.globalAlpha=alpha*(.5+r()*.5);c.lineWidth=1+r()*h*.02;c.beginPath();
+        let x=w*(r()*.15);c.moveTo(x,y+r()*4);
+        while(x<w*(.85+r()*.15)){x+=w*.04;c.lineTo(x,y+(r()-.5)*h*.012)}
+        c.stroke();
+      }
+    }
+    c.globalAlpha=1;
+  },
+  spray(c,w,h,r,P){
+    c.fillStyle=P[0];c.fillRect(0,0,w,h);
+    const cx=w/2,cy=h*.42,R=Math.min(w,h)*.28;
+    const g=c.createRadialGradient(cx,cy,R*.2,cx,cy,R*1.6);g.addColorStop(0,P[1]);g.addColorStop(.5,'rgba(255,79,163,.25)');g.addColorStop(1,'rgba(0,0,0,0)');
+    c.fillStyle=g;c.fillRect(0,0,w,h);
+    c.strokeStyle=P[2];c.lineWidth=R*.08;c.beginPath();c.arc(cx,cy-R*.55,R*.55,0,7);c.stroke();
+    c.fillStyle=P[0];c.beginPath();c.arc(cx,cy-R*.45,R*.32,0,7);c.fill();
+    c.beginPath();c.moveTo(cx-R*.7,h);c.quadraticCurveTo(cx,cy-R*.05,cx+R*.7,h);c.fill();
+    c.strokeStyle=P[3];c.lineWidth=2;for(let i=0;i<14;i++){const x=cx+(r()-.5)*R*2.2,y=cy+R*.3+r()*R*.4;c.globalAlpha=.7;c.beginPath();c.moveTo(x,y);c.lineTo(x,y+r()*h*.3);c.stroke()}
+    c.globalAlpha=.5;c.fillStyle=P[2];for(let i=0;i<260;i++){c.fillRect(cx+(r()-.5)*R*3,cy+(r()-.5)*R*3,1.5,1.5)}c.globalAlpha=1;
+  },
+  dutch(c,w,h,r,P){
+    const g=c.createRadialGradient(w*.5,h*.38,10,w*.5,h*.45,Math.max(w,h)*.7);g.addColorStop(0,'#4a3420');g.addColorStop(.45,P[1]);g.addColorStop(1,P[0]);
+    c.fillStyle=g;c.fillRect(0,0,w,h);
+    c.fillStyle='#0d0907';c.beginPath();c.moveTo(w*.18,h);c.bezierCurveTo(w*.22,h*.62,w*.78,h*.62,w*.82,h);c.fill();
+    c.fillStyle=P[3];c.globalAlpha=.92;c.beginPath();c.ellipse(w*.5,h*.62,w*.17,h*.05,0,0,7);c.fill();
+    c.strokeStyle='rgba(0,0,0,.25)';c.lineWidth=1;for(let i=0;i<16;i++){c.beginPath();c.ellipse(w*.5,h*.62,w*.17*(i/16),h*.05*(i/16),0,0,7);c.stroke()}
+    const fg=c.createRadialGradient(w*.47,h*.38,2,w*.5,h*.42,w*.16);fg.addColorStop(0,'#f0c99a');fg.addColorStop(1,P[2]);
+    c.globalAlpha=1;c.fillStyle=fg;c.beginPath();c.ellipse(w*.5,h*.42,w*.105,h*.15,0,0,7);c.fill();
+    c.fillStyle='#120c08';c.beginPath();c.ellipse(w*.5,h*.29,w*.15,h*.05,0,0,7);c.fill();c.fillRect(w*.41,h*.2,w*.18,h*.09);
+    c.fillStyle='rgba(201,164,76,.9)';c.beginPath();c.arc(w*.68,h*.86,w*.03,0,7);c.fill();
+    c.globalAlpha=.06;for(let i=0;i<500;i++){c.fillStyle='#000';c.fillRect(r()*w,r()*h,1,r()*6)}c.globalAlpha=1;
+  },
+  pixel(c,w,h,r,P){
+    c.fillStyle=P[0];c.fillRect(0,0,w,h);
+    const cols=14,s=w/cols,rows=Math.ceil(h/s);
+    for(let i=0;i<cols;i++)for(let j=0;j<rows;j++){
+      const v=Math.sin(i*.7+r()*2)+Math.cos(j*.5+r()*2);
+      if(v>.6){c.fillStyle=P[1+Math.floor(r()*(P.length-1))];c.globalAlpha=.55+r()*.45;c.fillRect(i*s+1,j*s+1,s-2,s-2)}
+    }
+    c.globalAlpha=1;
+  },
+  tide(c,w,h,r,P){
+    c.fillStyle=P[0];c.fillRect(0,0,w,h);
+    const cx=w*(.3+r()*.4),cy=h*1.05;c.lineCap='round';
+    for(let i=24;i>0;i--){c.strokeStyle=P[1+i%4];c.globalAlpha=.85;c.lineWidth=h*.022+r()*h*.012;c.beginPath();c.arc(cx,cy,i*Math.max(w,h)*.045,Math.PI,2*Math.PI);c.stroke()}
+    c.globalAlpha=1;
+  },
+  dots(c,w,h,r,P){
+    c.fillStyle=P[0];c.fillRect(0,0,w,h);
+    for(let i=0;i<46;i++){const R=Math.min(w,h)*(.02+r()*r()*.14);c.fillStyle=P[1+Math.floor(r()*(P.length-1))];c.globalAlpha=.88;c.beginPath();c.arc(r()*w,r()*h,R,0,7);c.fill()}
+    c.globalAlpha=1;
+  }
+};
+function drawArt(cv){
+  const w=cv.clientWidth,h=cv.clientHeight;if(!w||!h)return;
+  const dpr=Math.min(2,window.devicePixelRatio||1);
+  if(cv._w===w&&cv._h===h)return;cv._w=w;cv._h=h;
+  cv.width=Math.round(w*dpr);cv.height=Math.round(h*dpr);
+  const c=cv.getContext('2d');c.setTransform(dpr,0,0,dpr,0,0);
+  const style=cv.dataset.style,P=PALS[cv.dataset.pal||style]||PALS.field;
+  (ART[style]||ART.field)(c,w,h,rng(+cv.dataset.seed||1),P);
+  const v=c.createRadialGradient(w/2,h/2,Math.min(w,h)*.3,w/2,h/2,Math.max(w,h)*.75);v.addColorStop(0,'rgba(0,0,0,0)');v.addColorStop(1,'rgba(0,0,0,.28)');
+  c.fillStyle=v;c.fillRect(0,0,w,h);
+}
+function drawAll(){document.querySelectorAll('canvas[data-style]').forEach(drawArt)}
+
+/* ======================= Doors, lantern, tilt, lights ======================= */
+const doors=document.getElementById('doors');
+setTimeout(()=>doors.classList.add('gone'),reduce?0:2400);
+
+if(!reduce){
+  window.addEventListener('pointermove',e=>{
+    document.documentElement.style.setProperty('--mx',e.clientX+'px');
+    document.documentElement.style.setProperty('--my',e.clientY+'px');
+  },{passive:true});
+  document.querySelectorAll('.tilt').forEach(f=>{
+    f.addEventListener('pointermove',e=>{
+      const b=f.getBoundingClientRect(),x=(e.clientX-b.left)/b.width-.5,y=(e.clientY-b.top)/b.height-.5;
+      f.style.transform=`rotateY(${x*7}deg) rotateX(${-y*7}deg) translateZ(0)`;
+      f.style.boxShadow=`${-x*30}px ${34-y*20}px 60px -18px rgba(0,0,0,.65),0 0 0 1px rgba(0,0,0,.4)`;
+    });
+    f.addEventListener('pointerleave',()=>{f.style.transform='';f.style.boxShadow=''});
+  });
+  // gallery lights come up as you approach
+  const items=[...document.querySelectorAll('.reveal,.room-head,.cat-row,.visitor')];
+  const io=new IntersectionObserver(es=>es.forEach(en=>{if(en.isIntersecting){en.target.classList.add('lit');io.unobserve(en.target)}}),{rootMargin:'0px 0px -12% 0px'});
+  items.forEach(el=>{if(el.getBoundingClientRect().top>innerHeight*.9){el.classList.add('dim');io.observe(el)}});
+}
+
+/* nav highlight */
+const links=[...document.querySelectorAll('.rooms ol a')];
+const secIO=new IntersectionObserver(es=>es.forEach(en=>{if(en.isIntersecting){links.forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+en.target.id))}}),{rootMargin:'-45% 0px -50% 0px'});
+['foundations','collection','service','auction','archive'].forEach(id=>secIO.observe(document.getElementById(id)));
+
+/* ======================= Corridor ======================= */
+const cor=document.getElementById('collection'),track=document.getElementById('track'),walkBar=document.getElementById('walkBar');
+function corridorOn(){return !reduce&&innerWidth>=980&&innerHeight>=620}
+function layoutCorridor(){
+  if(!corridorOn()){cor.classList.remove('h');cor.style.height='';track.style.transform='';return}
+  cor.classList.add('h');
+  const dist=Math.max(0,track.scrollWidth-innerWidth);
+  cor.style.height=(dist+innerHeight)+'px';
+  onScroll();
+}
+function onScroll(){
+  if(!cor.classList.contains('h'))return;
+  const r=cor.getBoundingClientRect(),dist=Math.max(0,track.scrollWidth-innerWidth),span=cor.offsetHeight-innerHeight;
+  const p=span>0?Math.min(1,Math.max(0,-r.top/span)):0;
+  track.style.transform=`translate3d(${-p*dist}px,0,0)`;walkBar.style.width=(p*100)+'%';
+}
+window.addEventListener('scroll',onScroll,{passive:true});
+let rz;window.addEventListener('resize',()=>{clearTimeout(rz);rz=setTimeout(()=>{layoutCorridor();drawAll()},150)});
+
+/* ======================= Auction Floor game ======================= */
+const LOTS=[
+  {id:'han',  lot:'01',title:'Han River at Dusk',   artist:'Min Seo-yeon',             cat:'Korean contemporary',tag:'korean',   style:'ink',  seed:11,p0:120,vol:.06,drift:.012},
+  {id:'grid', lot:'02',title:'Untitled (Blue Grid)',artist:'Elias Varga',              cat:'Post-war abstract',  tag:'postwar',  style:'grid', seed:22,p0:340,vol:.035,drift:.008},
+  {id:'saint',lot:'03',title:'Neon Saint',          artist:'KIRA-07',                  cat:'Street & pop',       tag:'street',   style:'spray',seed:33,p0:45, vol:.12,drift:.01},
+  {id:'bank', lot:'04',title:'Portrait of a Banker',artist:'Circle of J. van der Hal', cat:'Old masters',        tag:'oldmaster',style:'dutch',seed:44,p0:210,vol:.03,drift:.004},
+  {id:'pix',  lot:'05',title:'Pixel Garden #12',    artist:'Ola Brandt',               cat:'Digital editions',   tag:'digital',  style:'pixel',seed:55,p0:18, vol:.18,drift:0},
+  {id:'tide', lot:'06',title:'Tidal Archive',       artist:'Amara Okafor',             cat:'Emerging',           tag:'emerging', style:'tide', seed:66,p0:60, vol:.09,drift:.02}
+];
+const EVENTS=[
+  {cat:'Auction record', h:'A Min Seo-yeon canvas hammers at three times its high estimate in Hong Kong.', fx:{korean:1.22,emerging:1.04}},
+  {cat:'Auction record', h:'A KIRA-07 print edition sells out in nine minutes. Secondary bids jump.', fx:{street:1.28}},
+  {cat:'Institutional',  h:'A major New York museum announces an Elias Varga retrospective.', fx:{postwar:1.15}},
+  {cat:'Institutional',  h:'Amara Okafor is selected for a national pavilion at the Biennale.', fx:{emerging:1.26}},
+  {cat:'Authentication', h:'Scholars question attributions to the circle of J. van der Hal.', fx:{oldmaster:.66}},
+  {cat:'Authentication', h:'A marketplace exploit casts doubt on the provenance of digital editions.', fx:{digital:.62}},
+  {cat:'Trade & tax',    h:'A new 15% tariff hits artworks imported into the United States.', fx:{all:.95,oldmaster:.92}},
+  {cat:'Trade & tax',    h:'Seoul expands tax relief for collectors of living Korean artists.', fx:{korean:1.12}},
+  {cat:'Trade & tax',    h:'Insurers double fine-art premiums after a freeport flood.', fx:{all:.98},ins:2},
+  {cat:'Macro',          h:'Equity selloff. Auction houses report far fewer consignments.', fx:{all:.88,digital:.8,street:.84}},
+  {cat:'Macro',          h:'The central bank cuts rates. Art-secured lending gets cheaper.', fx:{all:1.07,postwar:1.1}},
+  {cat:'Collector trend',h:'A pop star posts a studio visit with Ola Brandt to 20 million followers.', fx:{digital:1.35,street:1.06}},
+  {cat:'Collector trend',h:'A hedge fund founder opens a private museum of post-war abstraction.', fx:{postwar:1.13,oldmaster:1.04}},
+  {cat:'IP ruling',      h:'A court sides with KIRA-07 against an unlicensed apparel brand.', fx:{street:1.15}},
+  {cat:'IP ruling',      h:'Digital artists win class certification in an AI training lawsuit.', fx:{digital:1.12,emerging:1.03}}
+];
+const TRIALS=[
+  {title:'The Sneaker Case',case:'Copyright · ownership of the object vs. the work',
+   facts:'You bought the original canvas of Neon Saint at auction. A sneaker brand prints the image on 40,000 pairs without asking anyone. No copyright assignment was ever signed.',
+   q:'Who can sue for copyright infringement?',
+   opts:['You, as owner of the canvas','KIRA-07, the artist','No one, because shoes are a new use'],ans:1,
+   why:'Owning a physical artwork does not transfer its copyright. Under 17 U.S.C. § 202 the artist keeps it unless a signed written assignment says otherwise.'},
+  {title:'The Silkscreen Case',case:'Fair use · Andy Warhol Foundation v. Goldsmith (2023)',
+   facts:'A foundation licenses a silkscreen portrait, made from a photographer’s studio photo, to a magazine for its cover. The photographer licenses her own portraits to magazines too.',
+   q:'Is the magazine license fair use?',
+   opts:['Yes, the silkscreen adds a new style and meaning','No, it serves the same commercial purpose as the photo','Yes, because the artist is famous'],ans:1,
+   why:'In 2023 the U.S. Supreme Court held that the first fair-use factor did not favor the foundation: licensing the image to a magazine shared substantially the same commercial purpose as the original photograph.'},
+  {title:'The Whitewash Case',case:'Moral rights · Visual Artists Rights Act',
+   facts:'You own a warehouse covered in widely recognized aerosol murals. Ahead of a redevelopment, you paint over them overnight without notice to the artists.',
+   q:'What is your exposure?',
+   opts:['None, the walls are your property','Damages under the Visual Artists Rights Act','Only the cost of repainting'],ans:1,
+   why:'VARA (1990) protects works of recognized stature from destruction. In the 5Pointz case, Castillo v. G&M Realty, the owner was ordered to pay $6.75 million, upheld on appeal in 2020.'},
+  {title:'The London Resale Case',case:'Droit de suite · UK Artist’s Resale Right',
+   facts:'You resell a living artist’s painting through a London auction house for £50,000, well above what you paid.',
+   q:'Is the artist owed a share of the sale?',
+   opts:['No, the artist was paid on the first sale','Yes, a royalty under the UK Artist’s Resale Right','Only if the original bill of sale says so'],ans:1,
+   why:'The UK Artist’s Resale Right Regulations 2006 give living artists, and heirs for 70 years after death, a sliding-scale royalty on qualifying resales through art market professionals. The U.S. has no federal equivalent.'}
+];
+const SEASONS=10, SEASON_SEC=30, FEE=.015, INS=.005, START=100000, SHARE_STEP=10;
+const $=id=>document.getElementById(id);
+const money=x=>(x<0?'-$':'$')+Math.round(Math.abs(x)).toLocaleString('en-US');
+const pct=x=>(x>=0?'+':'')+(x*100).toFixed(1)+'%';
+function gauss(){let u=0,v=0;while(!u)u=Math.random();while(!v)v=Math.random();return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v)}
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+
+let G;
+function freshState(){
+  return {phase:'intro',season:0,time:SEASON_SEC,paused:false,cash:START,
+    lots:LOTS.map(l=>({id:l.id,p:l.p0,hist:[l.p0],sh:0,last:0})),
+    event:null,deck:shuffle(EVENTS.map((_,i)=>i)),
+    trialSeasons:[3,6,9],trialDeck:shuffle(TRIALS.map((_,i)=>i)).slice(0,3),trialIdx:0,trialRight:0,trialPending:false,
+    log:[],trial:null};
+}
+const L=id=>LOTS.find(l=>l.id===id);
+const holdings=()=>G.lots.reduce((s,x)=>s+x.sh*x.p,0);
+const net=()=>G.cash+holdings();
+const indexRet=()=>G.lots.reduce((s,x)=>s+x.p/L(x.id).p0,0)/G.lots.length-1;
+
+/* build lot cards */
+const lotsEl=$('gLots');
+LOTS.forEach(l=>{
+  const el=document.createElement('article');el.className='lot';el.id='lot-'+l.id;
+  el.innerHTML=`<div class="thumb"><canvas data-style="${l.style}" data-seed="${l.seed}" aria-hidden="true"></canvas></div>
+  <div><p class="lno">LOT ${l.lot} &middot; ${l.cat}</p><h4>${l.title}</h4><p class="art">${l.artist}</p></div>
+  <div class="px"><b id="p-${l.id}"></b><span class="pill" id="c-${l.id}"></span><svg class="spark" id="s-${l.id}" viewBox="0 0 90 28" preserveAspectRatio="none" aria-hidden="true"></svg></div>
+  <div class="own"><span>Own <b id="o-${l.id}">0</b> sh &middot; <b id="v-${l.id}">$0</b></span>
+  <span class="acts"><button type="button" id="sell-${l.id}" data-a="sell" data-id="${l.id}" aria-label="Sell 10 shares of ${l.title}">&minus;10</button><button type="button" class="buy" id="buy-${l.id}" data-a="buy" data-id="${l.id}" aria-label="Buy 10 shares of ${l.title}">+10</button><button type="button" id="all-${l.id}" data-a="all" data-id="${l.id}" aria-label="Sell all shares of ${l.title}">All out</button></span></div>`;
+  lotsEl.appendChild(el);
+});
+lotsEl.addEventListener('click',e=>{
+  const b=e.target.closest('button[data-a]');if(!b||G.phase!=='playing')return;
+  const x=G.lots.find(q=>q.id===b.dataset.id);
+  if(b.dataset.a==='buy'){const cost=SHARE_STEP*x.p*(1+FEE);if(G.cash>=cost&&x.sh+SHARE_STEP<=1000){G.cash-=cost;x.sh+=SHARE_STEP}}
+  else{const n=b.dataset.a==='all'?x.sh:Math.min(SHARE_STEP,x.sh);if(n>0){G.cash+=n*x.p*(1-FEE);x.sh-=n}}
+  render();
+});
+
+function spark(svg,h){
+  const n=h.length,mn=Math.min(...h),mx=Math.max(...h),rg=mx-mn||1;
+  const pts=h.map((v,i)=>[n===1?45:i/(n-1)*88+1,25-(v-mn)/rg*22]);
+  const s=pts.map(p=>p[0].toFixed(1)+','+p[1].toFixed(1)).join(' ');
+  const last=pts[pts.length-1];
+  svg.innerHTML=`<path d="M${pts[0][0]},27 L${s.replace(/ /g,' L')} L${last[0]},27Z"/><polyline points="${s}"/><circle cx="${last[0]}" cy="${last[1]}" r="2.2"/>`;
+}
+function render(){
+  const playing=G.phase==='playing';
+  $('hSeason').textContent=Math.max(G.season,0)+' / '+SEASONS;
+  $('hTime').textContent=Math.ceil(G.time)+'s';
+  $('ring').style.strokeDashoffset=(106.8*(1-G.time/SEASON_SEC)).toFixed(1);
+  $('hCash').textContent=money(G.cash);$('hHold').textContent=money(holdings());
+  const n=net();$('hNet').textContent=money(n);
+  const vs=(n/START-1)-indexRet();const hv=$('hVs');hv.textContent=(vs>=0?'+':'')+(vs*100).toFixed(1)+' pts';
+  hv.className='v '+(vs>0.0005?'up':vs<-0.0005?'down':'');
+  G.lots.forEach(x=>{
+    const l=L(x.id),ch=x.p/l.p0-1;
+    $('p-'+x.id).innerHTML='$'+x.p.toFixed(2)+'<small>/sh</small>';
+    const c=$('c-'+x.id);c.textContent=pct(ch);c.className='pill '+(ch>0.0005?'up':ch<-0.0005?'down':'');
+    $('o-'+x.id).textContent=x.sh;$('v-'+x.id).textContent=money(x.sh*x.p);
+    spark($('s-'+x.id),x.hist);
+    $('buy-'+x.id).disabled=!playing||G.cash<SHARE_STEP*x.p*(1+FEE)||x.sh>=1000;
+    $('sell-'+x.id).disabled=!playing||x.sh===0;$('all-'+x.id).disabled=!playing||x.sh===0;
+  });
+  $('gPause').disabled=!(playing);$('gPause').textContent=G.paused?'Resume':'Pause';
+  $('gSettle').disabled=!playing||G.paused;
+  renderTicker();
+}
+function renderTicker(){
+  const items=G.lots.map(x=>{const l=L(x.id),ch=x.p/l.p0-1;return `<span>LOT ${l.lot} ${l.title.toUpperCase()} <b>$${x.p.toFixed(2)}</b> <em class="${ch>=0?'u':'d'}" style="font-style:normal">${ch>=0?'▲':'▼'} ${Math.abs(ch*100).toFixed(1)}%</em></span>`});
+  const idx=indexRet();items.push(`<span>LEE ART INDEX <b>${(100*(1+idx)).toFixed(2)}</b> <em class="${idx>=0?'u':'d'}" style="font-style:normal">${idx>=0?'▲':'▼'} ${Math.abs(idx*100).toFixed(1)}%</em></span>`);
+  const html=items.join('');$('ticker').innerHTML=html+html;
+}
+function setNews(cat,truth,head,fine){
+  $('nCat').textContent=cat;const t=$('nTruth');
+  if(truth){t.hidden=false;t.textContent=truth==='rumor'?'Rumor':'Confirmed';t.className='truth '+(truth==='rumor'?'rumor':'conf')}else t.hidden=true;
+  $('nHead').textContent=head;$('nFine').textContent=fine;
+  const n=$('gNews');n.classList.remove('flash');void n.offsetWidth;n.classList.add('flash');
+}
+function logLine(html){G.log.unshift(html);G.log=G.log.slice(0,12);$('gLog').innerHTML=G.log.map(s=>'<li>'+s+'</li>').join('')}
+
+/* overlay cards */
+const over=$('gOver'),card=$('gCard');
+function showCard(html){card.innerHTML=html;over.hidden=false;const f=card.querySelector('button');if(f)f.focus({preventScroll:true})}
+function hideCard(){over.hidden=true}
+function introCard(){
+  showCard(`<p class="kicker">Gallery IV &middot; Opening bell</p><h3 id="gTitle">The Auction Floor</h3>
+  <p>You start with <b>$100,000</b> and ten seasons of 30 seconds each.</p>
+  <ol><li>Each season opens with market news. Buy or sell shares before the gavel falls and the news prices in.</li>
+  <li>Some news is only a rumor and can prove false.</li>
+  <li>Every trade costs 1.5%, and insuring your collection costs 0.5% a season.</li>
+  <li>Three seasons open with an art-law case. Rule correctly to earn an expert witness fee.</li></ol>
+  <p>Finish ahead of the Lee Art Index, an equal-weighted basket of all six lots.</p>
+  <button class="btn gilt" type="button" id="gStart">Take a paddle</button>`);
+  $('gStart').onclick=startGame;
+}
+function startGame(){G=freshState();G.phase='between';hideCard();$('gLog').innerHTML='';G.log=[];beginSeason()}
+function beginSeason(){
+  G.season++;G.time=SEASON_SEC;G.paused=false;
+  if(G.trialSeasons.includes(G.season)&&!G.trialPending){G.trialPending=true;return trialCard()}
+  G.trialPending=false;
+  const e=EVENTS[G.deck[(G.season-1)%G.deck.length]];
+  const rumor=Math.random()<.4;
+  G.event={i:EVENTS.indexOf(e),rumor,real:rumor?Math.random()<.55:true,mag:.6+Math.random()*.8};
+  setNews(e.cat,rumor?'rumor':'confirmed',e.h,rumor?'Unverified. If it proves false, prices drift the other way.':'Reported by multiple sources. Prices adjust when the gavel falls.');
+  G.phase='playing';render();
+}
+function trialCard(){
+  G.phase='trial';render();
+  const t=TRIALS[G.trialDeck[G.trialIdx]];
+  const order=shuffle([0,1,2]);
+  showCard(`<p class="kicker">Season ${G.season} &middot; Case ${G.trialIdx+1} of 3</p><h3 id="gTitle">${t.title}</h3>
+  <p class="case">${t.case}</p><p>${t.facts}</p><p><b>${t.q}</b></p>
+  <div class="opts">${order.map(i=>`<button type="button" id="opt-${i}" data-i="${i}">${t.opts[i]}</button>`).join('')}</div><div id="verdict"></div>`);
+  card.querySelectorAll('.opts button').forEach(b=>b.onclick=()=>{
+    const i=+b.dataset.i,ok=i===t.ans;
+    card.querySelectorAll('.opts button').forEach(x=>{x.disabled=true;if(+x.dataset.i===t.ans)x.classList.add('right')});
+    if(!ok)b.classList.add('wrong');
+    const amt=ok?4000:-3000;G.cash+=amt;if(ok)G.trialRight++;G.trialIdx++;
+    logLine(`S${G.season} <b>${t.title}:</b> ${ok?'ruled correctly, expert witness fee '+money(amt):'ruled wrong, legal fees '+money(-amt)}`);
+    $('verdict').innerHTML=`<p class="verdict"><b>${ok?'Correct.':'Not quite.'}</b> ${t.why}</p><button class="btn gilt" type="button" id="gBack">Return to the floor</button>`;
+    $('gBack').focus({preventScroll:true});
+    $('gBack').onclick=()=>{hideCard();G.season--;beginSeason()};
+    render();
+  });
+}
+function settle(){
+  if(G.phase!=='playing')return;
+  const e=EVENTS[G.event.i];let best=null,worst=null;
+  G.lots.forEach(x=>{
+    const l=L(x.id);let eff=e.fx[l.tag]??e.fx.all??1;
+    if(eff!==1){eff=G.event.real?1+(eff-1)*G.event.mag:1-(eff-1)*.4}
+    const m=Math.exp(l.drift-l.vol*l.vol/2+l.vol*gauss())*eff;
+    const old=x.p;x.p=Math.max(.5,x.p*m);x.hist.push(x.p);x.last=x.p/old-1;
+    if(!best||x.last>best.last)best=x;if(!worst||x.last<worst.last)worst=x;
+  });
+  const ins=holdings()*INS*(e.ins||1);G.cash-=ins;
+  const truth=G.event.rumor?(G.event.real?' Rumor confirmed.':' Rumor proved false.'):'';
+  logLine(`S${G.season} <b>${e.cat}.</b>${truth} Best: ${L(best.id).title} ${pct(best.last)}. Worst: ${L(worst.id).title} ${pct(worst.last)}. Insurance ${money(ins)}.`);
+  G.lots.forEach(x=>{const el=$('lot-'+x.id);el.classList.toggle('hit',Math.abs(x.last)>.08)});
+  G.phase='between';
+  if(G.season>=SEASONS){render();return endCard()}
+  beginSeason();
+}
+function endCard(){
+  G.phase='ended';
+  const liq=G.cash+holdings()*(1-FEE),ret=liq/START-1,idx=indexRet(),vs=ret-idx;
+  let title,blurb;
+  if(vs>.10){title='Blue-chip Gallerist';blurb='You read the room and beat the market by a wide margin.'}
+  else if(vs>0){title='Seasoned Collector';blurb='You finished ahead of the index after every fee.'}
+  else if(ret>-.2){title='Art Fair Tourist';blurb='Fees and timing cost you. The index won this sale.'}
+  else{title='Consigned to Storage';blurb='A rough season. Even blue chips need patience.'}
+  render();
+  showCard(`<p class="kicker">Final gavel &middot; Season ${SEASONS}</p><h3 id="gTitle">${title}</h3><p>${blurb}</p>
+  <div class="score"><div><span>Liquidated</span><b>${money(liq)}</b></div><div><span>Your return</span><b>${pct(ret)}</b></div><div><span>Index</span><b>${pct(idx)}</b></div></div>
+  <p>Art-law cases ruled correctly: <b>${G.trialRight} of 3</b>. Liquidation includes the 1.5% selling fee.</p>
+  <button class="btn gilt" type="button" id="gAgain">Play again</button>`);
+  $('gAgain').onclick=startGame;
+}
+$('gPause').onclick=()=>{if(G.phase!=='playing')return;G.paused=!G.paused;render()};
+$('gSettle').onclick=()=>{G.time=0;settle()};
+
+let lastT=performance.now();
+setInterval(()=>{
+  const now=performance.now(),dt=(now-lastT)/1000;lastT=now;
+  if(G&&G.phase==='playing'&&!G.paused){G.time=Math.max(0,G.time-dt);if(G.time<=0)settle();else{
+    $('hTime').textContent=Math.ceil(G.time)+'s';$('ring').style.strokeDashoffset=(106.8*(1-G.time/SEASON_SEC)).toFixed(1);}}
+},200);
+
+/* ======================= Boot (keeps state across republish) ======================= */
+function start(data){
+  G=freshState();
+  if(data&&data.g&&data.g.lots){G=data.g;if(G.phase==='playing')G.paused=true}
+  render();
+  if(G.phase==='intro')introCard();
+  else if(G.phase==='ended')endCard();
+  else if(G.phase==='trial'){G.trialPending=true;trialCard()}
+  else hideCard();
+  if(G.log&&G.log.length)$('gLog').innerHTML=G.log.map(s=>'<li>'+s+'</li>').join('');
+  if(G.event){const e=EVENTS[G.event.i];setNews(e.cat,G.event.rumor?'rumor':'confirmed',e.h,'Paused after an update. Press Resume.')}
+}
+window.claude?.hot?.snapshot?.(()=>({g:G}));
+let booted=false;
+function boot(){if(booted)return;booted=true;drawAll();layoutCorridor();const hot=window.claude?.hot;hot?.ready?hot.ready(start):start(hot?.data??{})}
+if(document.fonts&&document.fonts.ready){document.fonts.ready.then(boot)}else boot();
+setTimeout(boot,1500);
+window.addEventListener('load',()=>{drawAll();layoutCorridor()});
+})();
+</script>
+</body>
+</html>
